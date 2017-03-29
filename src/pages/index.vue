@@ -17,6 +17,9 @@
       <div class="index-left-block lastest-news">
         <h2>最新消息</h2>
         <ul>
+            <li v-for="item in newsList">
+                <a :href="item.url" class="new-item">{{ item.title }}</a>
+            </li>
         </ul>
       </div>
     </div>
@@ -42,6 +45,14 @@
 
 <script>
 export default {
+    created: function() {
+        this.$http.get('api/getNewsList')
+        .then((res) => {
+            this.newsList = res.data
+        }, (err) => {
+            console.log(err)
+        })
+    },
     data() {
         return {
             boardList: [
@@ -74,20 +85,7 @@ export default {
                     saleout: false
                 }
             ],
-            newsList: [
-                {
-                    title: '1',
-                    name: '1'
-                },
-                {
-                    title: '2',
-                    name: '2'
-                },
-                {
-                    title: '3',
-                    name: '3'
-                }
-            ],
+            newsList: [],
             productList: {
                 pc: {
                     title: 'PC产品',
