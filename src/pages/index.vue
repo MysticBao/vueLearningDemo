@@ -24,12 +24,9 @@
       </div>
     </div>
     <div class="index-right">
+       <slider-show :slides="slides" :inv="slideSpeed"></slider-show>
         <div class="index-board-list">
-            <div 
-            class="index-board-item"
-            v-for="(item,index) in boardList"
-            :class="[{'line-last' : index%2 !== 0},
-                'index-board-' + item.id]">
+            <div class="index-board-item" v-for="(item,index) in boardList" :class="[{'line-last' : index%2 !== 0}, 'index-board-' + item.id]">
                 <div class="index-board-item-inner">
                     <h2>{{ item.title }}</h2>
                     <p>{{ item.description }}</p>
@@ -44,7 +41,11 @@
 </template>
 
 <script>
+import sliderShow from '../components/sliderShow'
 export default {
+    components: {
+        sliderShow
+    },
     created: function() {
         this.$http.get('api/getNewsList')
         .then((res) => {
@@ -55,6 +56,29 @@ export default {
     },
     data() {
         return {
+            slideSpeed: 2000,
+            slides: [
+                {
+                    src: require('../assets/slideShow/pic1.jpg'),
+                    title: 'xxx1',
+                    href: 'detail/analysis'
+                },
+                {
+                    src: require('../assets/slideShow/pic2.jpg'),
+                    title: 'xxx2',
+                    href: 'detail/count'
+                },
+                {
+                    src: require('../assets/slideShow/pic3.jpg'),
+                    title: 'xxx3',
+                    href: 'http://xxx.xxx.com'
+                },
+                {
+                    src: require('../assets/slideShow/pic4.jpg'),
+                    title: 'xxx4',
+                    href: 'detail/forecast'
+                }
+            ],
             boardList: [
                 {
                     title: '开放产品',
