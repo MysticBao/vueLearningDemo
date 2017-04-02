@@ -22,8 +22,8 @@
     }
   ],
   "login": {
-    "username": "yudongdong",
-    "userId": 123123
+    "username": "test",
+    "userId": 12345
   },
   "getPrice": {
     "amount": 678

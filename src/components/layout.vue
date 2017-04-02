@@ -5,11 +5,14 @@
                 <img src="../assets/logo.png">
                 <div class="head-nav">
                     <ul class="nav-list">
-                        <li>登录</li>
+                        <li>{{ username }}</li>
+                        <li v-if="username!==''" class="nav-pile">|</li>
+                        <li v-if="username ===''" @click="logClick">登录</li>
+                        <li v-if="username !==''" @click="quitClick">退出</li>
+                        <li v-if="username ===''" class="nav-pile">|</li>
+                        <li v-if="username ===''" @click="regClick">注册</li>
                         <li class="nav-pile">|</li>
-                        <li>注册</li>
-                        <li class="nav-pile">|</li>
-                        <li>关于</li>
+                        <li @click="aboutClick">关于</li>
                     </ul>
                 </div>
             </div>
@@ -21,11 +24,60 @@
         </div>
         <div class="app-foot">
         </div>
+        <my-dialog :isShow="isShowLogDialog" @on-close="closeDialog('isShowLogDialog')">
+          <log-form @has-log="onSuccessLog"> </log-form>
+        </my-dialog>
+        <my-dialog :isShow="isShowRegDialog" @on-close="closeDialog('isShowRegDialog')">
+          <reg-form></reg-form>
+        </my-dialog>
+        <my-dialog :isShow="isShowAboutDialog" @on-close="closeDialog('isShowAboutDialog')">
+          <p>about</p>
+        </my-dialog>
     </div>
 </template>
 
 <script>
+import Dialog from './dialog'
+import LogForm from './logForm'
+import RegForm from './regForm'
+export default {
+  components: {
+    MyDialog: Dialog,
+    LogForm,
+    RegForm
+  },
+  data() {
+    return {
+      isShowDialog: false,
+      isShowLogDialog: false,
+      isShowRegDialog: false,
+      isShowAboutDialog: false,
+      username: ''
+    }
+  },
+  methods: {
+    aboutClick() {
+      this.isShowAboutDialog = true
+    },
+    quitClick() {
 
+    },
+    closeDialog(attr) {
+      this[attr] = false
+    },
+    logClick() {
+      this.isShowLogDialog = true
+    },
+    regClick() {
+      this.isShowRegDialog = true
+    },
+    onSuccessLog(data) {
+      console.log(data)
+      this.closeDialog(isShowDialog)
+      this.username = data.username
+    }
+  }
+}
 </script>
 
 <style>

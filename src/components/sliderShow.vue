@@ -54,7 +54,7 @@ export default {
             setTimeout(() => {
                 this.isShow = true
                 this.nowIndex = index
-            }, 10)
+            }, 10)   
         },
         runInv() {
             this.invId = setInterval(() => {
